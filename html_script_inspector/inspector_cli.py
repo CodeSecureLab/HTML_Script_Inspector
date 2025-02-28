@@ -1,7 +1,7 @@
 """command line interface for http_script_inspector"""
 import argparse
 import logging
-from script_inspector import html_files, inspect_files
+from src.script_inspector import html_files, inspect_files
 
 def main():
     parser = argparse.ArgumentParser(description="Inspect http scripts")

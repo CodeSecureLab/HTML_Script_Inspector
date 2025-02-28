@@ -47,6 +47,9 @@ def inspect_files(file_list):
                     if not module_name:
                         # Fallback to extract module name without version
                         module_name = src.split('/')[-1].split('.')[0]
+                    # Ensure version is only numbers and periods
+                    if version and not re.match(r'^[\d\.]+$', version):
+                        version = None
                     # Get the line number of the script tag
                     line_number = content[:content.find(src)].count('\n') + 1
                     module_obj = module(path=file, module=module_name, version=version, line=line_number)

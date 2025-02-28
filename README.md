@@ -13,7 +13,7 @@ Module Watchdog is a tool that parses HTML files for script imports using regex 
 To run the tool, use the following command(until release):
 
 ```sh
-python .\html_script_inspector\cli.py --path testing_dir
+python .\html_script_inspector\inspector_cli.py --path testing_dir
 ```
 
 ## Development
