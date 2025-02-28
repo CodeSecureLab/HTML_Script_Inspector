@@ -9,7 +9,7 @@ class ImportPatterns:
             'googleapis': re.compile(r'ajax\.googleapis\.com/ajax/libs/([^/]+)/([\d\.]+)/'),
             'unpkg': re.compile(r'unpkg\.com/([^@]+)@([\d\.]+)/'),
             'bootstrapcdn': re.compile(r'maxcdn\.bootstrapcdn\.com/bootstrap/([\d\.]+)/'),
-            'stackpath': re.compile(r'stackpath\..bootstrapcdn\.com/bootstrap/([\d\.]+)/'),
+            'stackpath': re.compile(r'stackpath\.bootstrapcdn\.com/bootstrap/([\d\.]+)/js/bootstrap\.min\.js'),
             'fontawesome': re.compile(r'cdn\.fontawesome\.com/([\d\.]+)/'),
             'bowercdn': re.compile(r'bowercdn\.net/libs/([^/]+)/([\d\.]+)/'),
             'googlefont': re.compile(r'fonts\.googleapis\.com/css\?family=([^&]+)&'),
