@@ -1,6 +1,6 @@
-# Module Watchdog
+# HTML Script Inspector
 
-Module Watchdog is a tool that parses HTML files for script imports using regex patterns. It is currently in development and aims to provide comprehensive support for identifying and managing module imports in HTML files.
+HTML Script Inspector is a tool that parses HTML files for script imports using regex patterns. It is currently in development and aims to provide comprehensive support for identifying and managing module imports in HTML files.
 
 ## Features
 
