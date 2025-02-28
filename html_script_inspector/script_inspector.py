@@ -1,9 +1,9 @@
 import os
 import glob
 import re
-from models.module import module
+from  src.models.module import module
 from bs4 import BeautifulSoup
-from regex_config import ImportPatterns
+from src.regex_config import ImportPatterns
 from prettytable import PrettyTable
 
 def html_files(path, recursive=False):
