@@ -50,6 +50,5 @@ def inspect_files(file_list):
                     # Get the line number of the script tag
                     line_number = content[:content.find(src)].count('\n') + 1
                     module_obj = module(path=file, module=module_name, version=version, line=line_number)
-                    print(module_obj)
                     modules.append(module_obj)
     pretty_table(modules)
