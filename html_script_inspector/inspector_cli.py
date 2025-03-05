@@ -2,8 +2,11 @@
 import argparse
 import logging
 from src.script_inspector import html_files, inspect_files
+from src.script_vulnerabilities import get_script_vulns
+import dotenv
 
 def main():
+    dotenv.load_dotenv()
     parser = argparse.ArgumentParser(description="Inspect http scripts")
     parser.add_argument("--path", help="path to inspect")
     parser.add_argument("-R", "--recursive", action="store_true", help="recursively inspect directories", default=False)
@@ -14,7 +17,11 @@ def main():
     #function to get all html files
     html_file_list = html_files(args.path, recursive=args.recursive)
     #main function for inspection
-    inspect_files(html_file_list)
+    modules = inspect_files(html_file_list)
+    if args.oss:
+        #inspect for open source vulnerabilities
+        get_script_vulns(modules)
+        
 
 
 

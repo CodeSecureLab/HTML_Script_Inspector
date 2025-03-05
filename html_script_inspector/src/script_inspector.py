@@ -2,9 +2,12 @@ import os
 import glob
 import re
 from  src.models.module import module
+from src.connections.cdnjs import get_latest_version_cdnjs
 from bs4 import BeautifulSoup
-from src.regex_config import ImportPatterns
+from src.configs.regex_config import ImportPatterns
 from prettytable import PrettyTable
+import asyncio
+
 
 def html_files(path, recursive=False):
     if recursive:
@@ -16,12 +19,20 @@ def html_files(path, recursive=False):
                 if file.endswith(".html"):
                     yield os.path.join(root, file)
 
-def pretty_table(modules):
+def output_sbom(modules):
     table = PrettyTable()
-    table.field_names = ["Path", "Module", "Version", "Line"]
+    table.title = "SBOM Results"
+    table.field_names = ["Path", "Module", "Version", "Latest Version"]
     for module in modules:
-        table.add_row([module.path, module.module, module.version if module.version else "None", module.line])
+        table.add_row([module.path, module.module, module.version, module.latest_version])
     print(table)
+
+def gather_latest_versions(modules):
+    loop = asyncio.get_event_loop()
+    tasks = [get_latest_version_cdnjs(module.module) for module in modules]
+    latest_versions = loop.run_until_complete(asyncio.gather(*tasks))
+    for module, latest_version in zip(modules, latest_versions):
+        module.latest_version = latest_version
 
 def inspect_files(file_list):
     modules = []
@@ -51,7 +62,11 @@ def inspect_files(file_list):
                     if version and not re.match(r'^[\d\.]+$', version):
                         version = None
                     # Get the line number of the script tag
-                    line_number = content[:content.find(src)].count('\n') + 1
-                    module_obj = module(path=file, module=module_name, version=version, line=line_number)
+                    if re.match(r'^[\d\.]+$', module_name):
+                        print(f"issue parsing {src}")
+                        continue
+                    module_obj = module(path=file, script=src, module=module_name, version=version)
                     modules.append(module_obj)
-    pretty_table(modules)
+    gather_latest_versions(modules)
+    output_sbom(modules)
+    return modules
