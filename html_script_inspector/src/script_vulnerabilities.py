@@ -1,10 +1,12 @@
 
 from src.connections.oss import get_vulnerabilities_oss
 from prettytable import PrettyTable
+from dotenv import load_dotenv
 
-def get_script_vulns(modules):
-    vulnerabilities = get_vulnerabilities_oss(modules)
+def get_script_vulns(modules, user, key):
+    vulnerabilities = get_vulnerabilities_oss(modules, user, key)
     display_vulnerabilities(vulnerabilities)
+    return vulnerabilities
     
 def display_vulnerabilities(vulnerabilities):
     table = PrettyTable()
